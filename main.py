@@ -1,9 +1,15 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from mmsystem import MM_STREAM_ERROR
 from pandas import isnull
 import seaborn as sns
 from scipy.stats import alpha
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+from sklearn.preprocessing import StandardScaler
 
 data=pd.read_csv("titanic.csv",usecols=['PassengerId','Survived','Pclass'
                                         ,'Name','Sex','Age',
@@ -27,16 +33,43 @@ df['Embarked'] = df['Embarked'].fillna(embarked_mode)
 df=df.drop('Cabin',axis=1)
 df=df.drop('Name',axis=1)
 df=df.drop('Ticket',axis=1)
-print(df['Embarked'].unique())
-print(df['Sex'].unique())
+# print(df['Embarked'].unique())
+# print(df['Sex'].unique())
 df['Embarked']=df['Embarked'].map({'S':1,'C':2,'Q':3})
 df['Sex']=df['Sex'].map({'male':1,'female':2})
 
 # print(df.isnull().sum())
 # print(df)
 # print(df.corr(numeric_only=True))
-print(df.dtypes)
-print(df['Age'].skew())
+# print(df.dtypes)
+# print(df['Age'].skew())
 # sns.histplot(df,x='Age')
-sns.scatterplot(df,x='Age',y='Fare',hue='Sex',alpha=0.6)
-plt.show()
+# sns.scatterplot(df,x='Age',y='Fare',hue='Sex',alpha=0.6)
+
+# print(df.corr())
+# sns.heatmap(df.corr())
+# plt.show()
+
+X=df.drop('Survived',axis=1)
+Y=df['Survived']
+
+ss = StandardScaler()
+x_resxale= ss.fit_transform(X)
+X_train ,X_test, Y_train ,Y_test =train_test_split(x_resxale,Y, test_size=0.20 , random_state=45)
+
+
+model=LinearRegression()
+model.fit(X_train,Y_train)
+y_pred= model.predict(X_test)
+
+# print(y_pred)
+
+mae='Mae :', mean_absolute_error(Y_test,y_pred)
+mse='Mse :', mean_squared_error(Y_test,y_pred)
+Rmse ='Rmse :',np.sqrt(mean_squared_error(Y_test,y_pred))
+r2_score=r2_score(Y_test,y_pred)
+
+print(mae)
+print(mse)
+print(Rmse)
+print(r2_score)
