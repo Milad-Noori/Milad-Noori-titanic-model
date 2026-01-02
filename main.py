@@ -7,7 +7,7 @@ import seaborn as sns
 from scipy.stats import alpha
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
@@ -55,12 +55,16 @@ Y=df['Survived']
 
 ss = StandardScaler()
 x_resxale= ss.fit_transform(X)
-X_train ,X_test, Y_train ,Y_test =train_test_split(x_resxale,Y, test_size=0.20 , random_state=45)
+X_train ,X_test, Y_train ,Y_test =train_test_split(x_resxale,Y, test_size=0.10 , random_state=45)
 
 
 model=LinearRegression()
 model.fit(X_train,Y_train)
 y_pred= model.predict(X_test)
+
+# model=LogisticRegression()
+# model.fit(X_train,Y_train)
+# y_pred= model.predict(X_test)
 
 # print(y_pred)
 
