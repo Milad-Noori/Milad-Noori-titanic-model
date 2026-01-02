@@ -9,8 +9,14 @@ data=pd.read_csv("titanic.csv",usecols=['PassengerId','Survived','Pclass'
                                         'SibSp','Parch','Ticket','Fare','Cabin','Embarked'])
 
 df=pd.DataFrame(data)
-
+####
+# avg_age=df['Age'].mean()
+#####
 median=df['Age'].median()
 df['Age']= df['Age'].fillna(median)
-print(df)
+
+embarked_mode=df['Embarked'].mode()[0]
+df['Embarked'] = df['Embarked'].fillna(embarked_mode)
+df=df.drop('Cabin',axis=1)
 print(df.isnull().sum())
+# print(df.info())
