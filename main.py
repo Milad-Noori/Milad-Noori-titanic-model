@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pandas import isnull
-from sklearn.preprocessing import StandardScaler
-
+import seaborn as sns
+from scipy.stats import alpha
 
 data=pd.read_csv("titanic.csv",usecols=['PassengerId','Survived','Pclass'
                                         ,'Name','Sex','Age',
@@ -36,3 +36,7 @@ df['Sex']=df['Sex'].map({'male':1,'female':2})
 # print(df)
 # print(df.corr(numeric_only=True))
 print(df.dtypes)
+print(df['Age'].skew())
+# sns.histplot(df,x='Age')
+sns.scatterplot(df,x='Age',y='Fare',hue='Sex',alpha=0.6)
+plt.show()
