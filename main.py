@@ -28,6 +28,7 @@ pd.set_option('display.max_columns',None)
 median=df['Age'].median()
 df['Age']= df['Age'].fillna(median)
 
+
 embarked_mode=df['Embarked'].mode()[0]
 df['Embarked'] = df['Embarked'].fillna(embarked_mode)
 df=df.drop('Cabin',axis=1)
@@ -37,15 +38,35 @@ df=df.drop('Ticket',axis=1)
 # print(df['Sex'].unique())
 df['Embarked']=df['Embarked'].map({'S':1,'C':2,'Q':3})
 df['Sex']=df['Sex'].map({'male':1,'female':2})
+df['Age']=df['Age'].astype(int)
+df['Fare']=df['Fare'].astype(int)
 
-# print(df.isnull().sum())
+# sns.boxplot(data=df,x='Sex')
+# plt.show()
+sns.boxplot(data=df,x='Age')
+plt.show()
+#
+q1 = df['Age'].quantile(0.25)
+q3 = df['Age'].quantile(0.75)
+
+IQR=q3-q1
+
+lower_bound = q1 - 1.5 * IQR
+upper_bound = q1 + 1.5 * IQR
+
+df=df[(df['Age'] >= lower_bound ) & (df['Age'] <= upper_bound)]
+
+sns.boxplot(data=df,x='Age')
+plt.show()
+print(df.isnull().sum())
 # print(df)
 # print(df.corr(numeric_only=True))
-# print(df.dtypes)
+print(df.dtypes)
 # print(df['Age'].skew())
 # sns.histplot(df,x='Age')
 # sns.scatterplot(df,x='Age',y='Fare',hue='Sex',alpha=0.6)
-
+sns.pairplot(df)
+plt.show()
 # print(df.corr())
 # sns.heatmap(df.corr())
 # plt.show()
@@ -55,7 +76,7 @@ Y=df['Survived']
 
 ss = StandardScaler()
 x_resxale= ss.fit_transform(X)
-X_train ,X_test, Y_train ,Y_test =train_test_split(x_resxale,Y, test_size=0.10 , random_state=45)
+X_train ,X_test, Y_train ,Y_test =train_test_split(X,Y, test_size=0.10 , random_state=45)
 
 
 model=LinearRegression()
@@ -77,3 +98,5 @@ print(mae)
 print(mse)
 print(Rmse)
 print(r2_score)
+
+
