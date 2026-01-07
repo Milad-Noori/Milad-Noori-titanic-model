@@ -43,8 +43,8 @@ df['Fare']=df['Fare'].astype(int)
 
 # sns.boxplot(data=df,x='Sex')
 # plt.show()
-sns.boxplot(data=df,x='Age')
-plt.show()
+# sns.boxplot(data=df,x='Age')
+# plt.show()
 #
 q1 = df['Age'].quantile(0.25)
 q3 = df['Age'].quantile(0.75)
@@ -52,21 +52,58 @@ q3 = df['Age'].quantile(0.75)
 IQR=q3-q1
 
 lower_bound = q1 - 1.5 * IQR
-upper_bound = q1 + 1.5 * IQR
+upper_bound = q3 + 1.5 * IQR
 
 df=df[(df['Age'] >= lower_bound ) & (df['Age'] <= upper_bound)]
 
-sns.boxplot(data=df,x='Age')
+
+# sns.boxplot(data=df,x='Age')
+# plt.show()
+
+# sns.boxplot(data=df,x='Fare')
+# plt.show()
+# Q1 = df['Fare'].quantile(0.10)
+# Q3 = df['Fare'].quantile(0.60)
+#
+# IQR = Q3- Q1
+#
+# lower_bound2 = Q1 - 1.5 * IQR
+# upper_bound2 = Q3 + 1.5 * IQR
+#
+# df= df[(df['Fare'] >= lower_bound2) & (df['Fare']<= upper_bound2)]
+#
+# sns.boxplot(data=df,x='Fare')
+# plt.show()
+
+
+sns.boxplot(data=df,x='SibSp')
 plt.show()
-print(df.isnull().sum())
+Q1 = df['SibSp'].quantile(0.10)
+Q3 = df['SibSp'].quantile(0.60)
+
+IQR = Q3- Q1
+
+lower_bound2 = Q1 - 1.9 * IQR
+upper_bound2 = Q3 + 1.9 * IQR
+
+df= df[(df['SibSp'] >= lower_bound2) & (df['SibSp']<= upper_bound2)]
+
+sns.boxplot(data=df,x='Fare')
+plt.show()
+
+
+
+
+# print(df.isnull().sum())
 # print(df)
 # print(df.corr(numeric_only=True))
-print(df.dtypes)
+# print(df.dtypes)
 # print(df['Age'].skew())
 # sns.histplot(df,x='Age')
+# plt.show()
 # sns.scatterplot(df,x='Age',y='Fare',hue='Sex',alpha=0.6)
-sns.pairplot(df)
-plt.show()
+# sns.pairplot(df)
+# plt.show()
 # print(df.corr())
 # sns.heatmap(df.corr())
 # plt.show()
@@ -76,7 +113,7 @@ Y=df['Survived']
 
 ss = StandardScaler()
 x_resxale= ss.fit_transform(X)
-X_train ,X_test, Y_train ,Y_test =train_test_split(X,Y, test_size=0.10 , random_state=45)
+X_train ,X_test, Y_train ,Y_test =train_test_split(X,Y, test_size=0.01 , random_state=0)
 
 
 model=LinearRegression()
@@ -98,5 +135,15 @@ print(mae)
 print(mse)
 print(Rmse)
 print(r2_score)
+
+
+
+
+
+from joblib import dump,load
+
+# dump(y_pred ,'kjhjghf')
+# load_model=load('kjhjghf')
+
 
 
