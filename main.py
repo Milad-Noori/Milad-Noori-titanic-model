@@ -76,8 +76,8 @@ df=df[(df['Age'] >= lower_bound ) & (df['Age'] <= upper_bound)]
 # plt.show()
 
 
-sns.boxplot(data=df,x='SibSp')
-plt.show()
+# sns.boxplot(data=df,x='SibSp')
+# plt.show()
 Q1 = df['SibSp'].quantile(0.10)
 Q3 = df['SibSp'].quantile(0.60)
 
@@ -88,8 +88,8 @@ upper_bound2 = Q3 + 1.9 * IQR
 
 df= df[(df['SibSp'] >= lower_bound2) & (df['SibSp']<= upper_bound2)]
 
-sns.boxplot(data=df,x='Fare')
-plt.show()
+# sns.boxplot(data=df,x='Fare')
+# plt.show()
 
 
 
@@ -137,13 +137,18 @@ print(Rmse)
 print(r2_score)
 
 
+newdata=[[50,2,1,23,1,0,8,1]]
+final_model=LinearRegression()
+final_model.fit(X.values,Y)
+print(final_model.predict(newdata))
+
 
 
 
 from joblib import dump,load
 
-# dump(y_pred ,'kjhjghf')
-# load_model=load('kjhjghf')
+dump(y_pred ,'Titanic_app')
+load_model=load('Titanic_app')
 
 
 
